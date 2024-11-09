@@ -1,7 +1,6 @@
 package gui;
 
 import model.Patient;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,76 +13,49 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setTitle("Hospital Management System");
-        setSize(600, 400);
+        setSize(600, 500);  // Increased size to accommodate all buttons
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Initialize the patient list
         patientList = new ArrayList<>();
 
-        // Use BackgroundPanel
+        // Use BackgroundPanel (assumes a class that handles custom backgrounds)
         BackgroundPanel backgroundPanel = new BackgroundPanel();
         setContentPane(backgroundPanel);
         backgroundPanel.setLayout(new BorderLayout());
 
         // Title Panel
         JPanel titlePanel = new JPanel();
-        titlePanel.setOpaque(false); // Make the title panel transparent
-        JLabel titleLabel = new JLabel("Welcome to the Hospital Management System");
+        titlePanel.setOpaque(false); // Transparent panel
+        JLabel titleLabel = new JLabel("Welcome to MediMap");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setForeground(Color.black); // Change text color for visibility
+        titleLabel.setForeground(Color.BLACK); // Set text color for visibility
         titlePanel.add(titleLabel);
         backgroundPanel.add(titlePanel, BorderLayout.NORTH);
 
         // Button Panel
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setOpaque(false); // Make the button panel transparent
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // Use FlowLayout for better control
+        buttonPanel.setOpaque(false); // Transparent panel
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20)); // FlowLayout for button control
 
         JButton addPatientButton = new JButton("Add Patient");
         JButton viewPatientsButton = new JButton("View Patients");
         JButton manageBedsButton = new JButton("Manage Beds");
-        JButton appointmentButton = new JButton("Schedule Appointment"); // New Button for Appointment
-        JButton emergencyServicesButton = new JButton("Emergency Services"); // New Button for Emergency Services
+        JButton appointmentButton = new JButton("Schedule Appointment");
+        JButton emergencyServicesButton = new JButton("Emergency Services");
+        JButton reportsButton = new JButton("Reports & Analytics"); // New button for reports & analytics
+        JButton pharmacyButton = new JButton("Pharmacy"); // New button for Pharmacy management
 
+        // Button dimensions
         Dimension buttonSize = new Dimension(160, 40);
-        // Set preferred, minimum, and maximum sizes for buttons
-        addPatientButton.setPreferredSize(buttonSize);
-        addPatientButton.setMinimumSize(buttonSize);
-        addPatientButton.setMaximumSize(buttonSize);
+        JButton[] buttons = {addPatientButton, viewPatientsButton, manageBedsButton, appointmentButton, emergencyServicesButton, reportsButton, pharmacyButton};
 
-        viewPatientsButton.setPreferredSize(buttonSize);
-        viewPatientsButton.setMinimumSize(buttonSize);
-        viewPatientsButton.setMaximumSize(buttonSize);
-
-        manageBedsButton.setPreferredSize(buttonSize);
-        manageBedsButton.setMinimumSize(buttonSize);
-        manageBedsButton.setMaximumSize(buttonSize);
-
-        appointmentButton.setPreferredSize(buttonSize);
-        appointmentButton.setMinimumSize(buttonSize);
-        appointmentButton.setMaximumSize(buttonSize);
-
-        emergencyServicesButton.setPreferredSize(buttonSize);
-        emergencyServicesButton.setMinimumSize(buttonSize);
-        emergencyServicesButton.setMaximumSize(buttonSize);
-
-        // Style buttons
-        addPatientButton.setBackground(new Color(0, 128, 0)); // Dark green
-        addPatientButton.setForeground(Color.BLACK);
-        viewPatientsButton.setBackground(new Color(0, 0, 255)); // Blue
-        viewPatientsButton.setForeground(Color.black);
-        manageBedsButton.setBackground(new Color(255, 165, 0)); // Orange
-        manageBedsButton.setForeground(Color.black);
-        appointmentButton.setBackground(new Color(0, 0, 255)); // Blue
-        appointmentButton.setForeground(Color.black);
-        emergencyServicesButton.setBackground(new Color(255, 0, 0)); // Red for Emergency
-        emergencyServicesButton.setForeground(Color.BLACK);
-
-        buttonPanel.add(addPatientButton);
-        buttonPanel.add(viewPatientsButton);
-        buttonPanel.add(manageBedsButton);
-        buttonPanel.add(appointmentButton); // Add Appointment Button
-        buttonPanel.add(emergencyServicesButton); // Add Emergency Services Button
+        for (JButton button : buttons) {
+            button.setPreferredSize(buttonSize);
+            button.setBackground(new Color(173, 216, 230)); // Light blue for consistency
+            button.setForeground(Color.BLACK);
+            buttonPanel.add(button);
+        }
 
         backgroundPanel.add(buttonPanel, BorderLayout.CENTER);
 
@@ -91,35 +63,49 @@ public class MainFrame extends JFrame {
         addPatientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AddPatientFrame(patientList); // Pass the patient list
+                new AddPatientFrame(patientList); // Pass patient list
             }
         });
 
         viewPatientsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ViewPatientsFrame(patientList); // Pass the patient list
+                new ViewPatientsFrame(patientList); // Pass patient list
             }
         });
 
         manageBedsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ManageBedsFrame(); // Modify if needed
+                new ManageBedsFrame(); // Open Manage Beds frame
             }
         });
 
         appointmentButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new AppointmentFrame(patientList); // Open the Appointment frame
+                new AppointmentFrame(patientList); // Open Appointment frame
             }
         });
 
         emergencyServicesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new EmergencyServicesFrame(); // Open the Emergency Services frame
+                new EmergencyServicesFrame(); // Open Emergency Services frame
+            }
+        });
+
+        reportsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ReportsFrame(patientList); // Open Reports & Analytics frame (implement as needed)
+            }
+        });
+
+        pharmacyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new PharmacyFrame(); // Open Pharmacy management frame
             }
         });
     }
